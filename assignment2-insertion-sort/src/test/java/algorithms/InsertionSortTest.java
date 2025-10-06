@@ -29,9 +29,8 @@ public class InsertionSortTest {
     public void testDuplicates() {
         int[] arr = {3, 1, 3, 2};
         int[] expected = arr.clone();
-        InsertionSort.sort(arr);
-        assertArrayEquals(expected, arr);
         Arrays.sort(expected);
+        InsertionSort.sort(arr);
         assertArrayEquals(expected, arr);
     }
 
@@ -45,13 +44,14 @@ public class InsertionSortTest {
         assertArrayEquals(expected, arr);
     }
 
+
     @Test
     public void testReverseSorted() {
         int[] arr = {4, 3, 2, 1};
-        int[] expected = arr.clone();
-        InsertionSort.sort(arr);
-        assertArrayEquals(expected, arr);
-        Arrays.sort(expected);
-        assertArrayEquals(expected, arr);
+        int[] expected = {4, 3, 2, 1};
+        Arrays.sort(expected); // Expected should be sorted ascending
+        InsertionSort.sort(arr); // Sort using your custom method
+        assertArrayEquals(expected, arr); // Compare results
     }
+
 }
