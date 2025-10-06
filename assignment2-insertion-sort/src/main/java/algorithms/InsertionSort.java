@@ -7,32 +7,29 @@ public class InsertionSort {
         if (arr == null) throw new IllegalArgumentException("Array is null");
         if (arr.length <= 1) return;
 
-        tracker.startTiming(); // Start timing the sort
+        tracker.startTiming();
         for (int i = 1; i < arr.length; i++) {
             int key = arr[i];
             tracker.incrementArrayAccesses(); // Access to arr[i]
             int j = i - 1;
-            while (j >= 0) {
-                tracker.incrementComparisons(); // Comparison
-                if (arr[j] > key) {
-                    arr[j + 1] = arr[j];
-                    tracker.incrementSwaps(); // Swap
-                    tracker.incrementArrayAccesses(); // Two accesses
-                    j--;
-                } else {
-                    break; // Early exit for nearly-sorted optimization
-                }
+            while (j >= 0 && arr[j] > key) {
+                tracker.incrementComparisons();
+                arr[j + 1] = arr[j]; // Shift larger element right
+                tracker.incrementSwaps();
+                tracker.incrementArrayAccesses(); // Access to arr[j+1]
+                j--;
             }
-            arr[j + 1] = key;
-            tracker.incrementArrayAccesses(); // Access to arr[j+1]
+            if (j + 1 != i) { // Insert key only if shifted
+                arr[j + 1] = key;
+                tracker.incrementArrayAccesses(); // Access to arr[j+1]
+            }
         }
-        tracker.stopTiming(); // Stop timing (handled in export)
+        tracker.stopTiming();
     }
 
-    // Optional: Overload for convenience if needed
     public static void sort(int[] arr) {
         PerformanceTracker tracker = new PerformanceTracker();
         sort(arr, tracker);
-        tracker.exportToCSV("benchmark.csv"); // Default export
+        tracker.exportToCSV("benchmark.csv");
     }
 }
